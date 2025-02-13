@@ -2,7 +2,6 @@ import { Produits } from "src/produit/entities/produit.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
-
 @Index("parent_id", ["parentId"], {})
 @Entity("categories", { schema: "gestion_stock" })
 export class Categories {

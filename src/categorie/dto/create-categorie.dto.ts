@@ -12,9 +12,5 @@ export class CreateCategorieDto {
   
   @IsInt()
   parentId: number | null;
-
-  @IsNumber()
-  Id:number
- 
   
 }

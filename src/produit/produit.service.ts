@@ -14,9 +14,8 @@ export class ProduitService {
     private readonly categorieService : CategorieService
   ){  }
   async create(createProduitDto: CreateProduitDto) {
-    
-
-     try {
+     
+    try {
       const categorie = await this.categorieService.findOne(createProduitDto.categorieId) 
       const article= new Produits()
       article.nom= createProduitDto.nom;
@@ -24,8 +23,6 @@ export class ProduitService {
       article.description = createProduitDto.description
       article.stockActuel=createProduitDto.stockActuel
       article.seuilAlerte=createProduitDto.seuilAlerte
-
-      
 
       
       const ligne = await this.produitRepository.save(article)

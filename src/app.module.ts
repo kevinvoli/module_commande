@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CommandeModule } from './commande/commande.module';
-import { FournisseurModule } from './fournisseur/fournisseur.module';
 import { ProduitModule } from './produit/produit.module';
-import { ClientModule } from './client/client.module';
 import { CategorieModule } from './categorie/categorie.module';
-import { DetailsCommandeModule } from './details_commande/details_commande.module';
 import { DatabaseModule } from './database/database.module';
 import * as Joi from '@hapi/joi';
 import { ConfigModule } from '@nestjs/config';
+import { MouvementsStockModule } from './mouvements_stock/mouvements_stock.module';
+import { EmplacementsModule } from './emplacements/emplacements.module';
+import { CaslModule } from './casl/casl.module';
+import { EntrepotsModule } from './entrepots/entrepots.module';
+import { RangementsModule } from './rangements/rangements.module';
+import { RayonsModule } from './rayons/rayons.module';
 
 
 
@@ -24,13 +26,16 @@ import { ConfigModule } from '@nestjs/config';
       SERVER_PORT:Joi.number().required()
     })
   }),
-  CommandeModule, 
-  FournisseurModule, 
+
   ProduitModule,
-  ClientModule, 
   CategorieModule, 
-  DetailsCommandeModule, 
   DatabaseModule, 
+  MouvementsStockModule, 
+  EmplacementsModule,
+  CaslModule,
+  EntrepotsModule,
+  RangementsModule,
+  RayonsModule 
 ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,5 +1,5 @@
-import { DetailsCommandes } from "src/details_commande/entities/details_commande.entity";
-
+import { Categories } from "src/categorie/entities/categorie.entity";
+import { MouvementsStock } from "src/mouvements_stock/entities/mouvements_stock.entity";
 import {
   Column,
   CreateDateColumn,
@@ -12,7 +12,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Categories } from "src/categorie/entities/categorie.entity";
 
 
 @Index("categorie_id", ["categorieId"], {})
@@ -36,17 +35,17 @@ export class Produits {
   @Column("int", { name: "seuil_alerte" })
   seuilAlerte: number;
 
-  @OneToMany(
-    () => DetailsCommandes,
-    (detailsCommandes) => detailsCommandes.produit
-  )
-  detailsCommandes: DetailsCommandes[];
-
   // @OneToMany(
-  //   () => MouvementsStock,
-  //   (mouvementsStock) => mouvementsStock.produit
+  //   () => DetailsCommandes,
+  //   (detailsCommandes) => detailsCommandes.produit
   // )
-  // mouvementsStocks: MouvementsStock[];
+  // detailsCommandes: DetailsCommandes[];
+
+  @OneToMany(
+    () => MouvementsStock,
+    (mouvementsStock) => mouvementsStock.produit
+  )
+  mouvementsStocks: MouvementsStock[];
 
   // @OneToMany(() => Notifications, (notifications) => notifications.produit)
   // notifications: Notifications[];
@@ -58,12 +57,12 @@ export class Produits {
   @JoinColumn([{ name: "categorie_id", referencedColumnName: "id" }])
   categorie: Categories;
 
-  @CreateDateColumn({type:'datetime',  name: 'created_at'})
-  createdAt: Date;
-
-  @UpdateDateColumn({type:'datetime', name: 'updated_at'})
-  updatedAt: Date;
-
-  @DeleteDateColumn({type:'datetime', name: 'delected_at'})
-  delectedAt:Date;
+   @CreateDateColumn({type:'datetime',  name: 'created_at'})
+    createdAt: Date;
+  
+    @UpdateDateColumn({type:'datetime', name: 'updated_at'})
+    updatedAt: Date;
+  
+    @DeleteDateColumn({type:'datetime', name: 'delected_at'})
+    delectedAt:Date;
 }

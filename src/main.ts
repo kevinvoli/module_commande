@@ -19,10 +19,11 @@ async function bootstrap() {
   // Enregistrer ce service auprès du Gateway
   try {
     await axios.post('http://127.0.0.1:3003/discovery/register', {
-      name: serviceName,
+      nom: serviceName,
       host: host,
-      port:port,
-      protocole:protocole
+      port:port.toString(),
+      protocole:protocole,
+      cleApi:'zertyuioouyjtrgefzdertyu'
     });
     console.log(`${serviceName} enregistré auprès du Gateway`);
   } catch (error) {
