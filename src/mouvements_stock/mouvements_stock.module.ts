@@ -5,12 +5,12 @@ import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { ConfigService } from '@nestjs/config';
 import { EntityLoader } from 'src/casl/entity-loader.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Permissions } from 'src/casl/entities/permission.entity';
+import { MouvementsStock } from './entities/mouvements_stock.entity';
 
 @Module({
     imports:[
       TypeOrmModule.forFeature([
-        Permissions
+        MouvementsStock
        ]),
     ],
   controllers: [MouvementsStockController],

@@ -7,7 +7,6 @@ import { DatabaseModule } from './database/database.module';
 import * as Joi from '@hapi/joi';
 import { ConfigModule } from '@nestjs/config';
 import { MouvementsStockModule } from './mouvements_stock/mouvements_stock.module';
-import { EmplacementsModule } from './emplacements/emplacements.module';
 import { CaslModule } from './casl/casl.module';
 import { EntrepotsModule } from './entrepots/entrepots.module';
 import { RangementsModule } from './rangements/rangements.module';
@@ -31,7 +30,6 @@ import { RayonsModule } from './rayons/rayons.module';
   CategorieModule, 
   DatabaseModule, 
   MouvementsStockModule, 
-  EmplacementsModule,
   CaslModule,
   EntrepotsModule,
   RangementsModule,

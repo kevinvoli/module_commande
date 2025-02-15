@@ -3,16 +3,16 @@ import { CategorieService } from './categorie.service';
 import { CategorieController } from './categorie.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Categories } from './entities/categorie.entity';
-import { Permissions } from 'src/casl/entities/permission.entity';
 import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { ConfigService } from '@nestjs/config';
 import { EntityLoader } from 'src/casl/entity-loader.service';
+import { Entrepots } from 'src/entrepots/entities/entrepot.entity';
 
 @Module({
   imports:[
     TypeOrmModule.forFeature([
       Categories,
-      Permissions
+      
      ]),
   ],
   providers: [

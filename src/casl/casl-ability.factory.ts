@@ -4,8 +4,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EntityLoader } from './entity-loader.service'; // Service de chargement dynamique
 import { getMetadataArgsStorage } from 'typeorm';
-import { Action, Permissions } from './entities/permission.entity';
 
+import { Action } from './entities/permission.entity';
+import { CreatePermissionDto } from './dto/create-permission.dto';
 
 
 
@@ -16,8 +17,6 @@ export class CaslAbilityFactory {
   private subjects: string[];
 
   constructor(
-    @InjectRepository(Permissions)
-    private permissionRepository: Repository<Permissions>,
     private entityLoader: EntityLoader, // Injection du loader dynamique
   ) {
     // Charge toutes les entités disponibles
@@ -25,18 +24,13 @@ export class CaslAbilityFactory {
   }
   
 
-  async createForUser(user: Permissions[]) {
+  async createForUser(user: CreatePermissionDto[]) {
+    
+    console.log("mes  ",user,this.subjects);        
     
     const { can, cannot, build } = new AbilityBuilder<
       Ability<[Action, string]> // On utilise `string` pour les sujets
     >(Ability as AbilityClass<Ability<[Action, string]>>);
-
-    // Récupère les permissions du rôle de l'utilisateur
-    const permissions = await this.permissionRepository.find({
-      // where: { role: user.role },
-    });
-
-   
 
     // Applique chaque permission dynamiquement
     user.forEach((permission) => {
@@ -46,7 +40,6 @@ export class CaslAbilityFactory {
   const conditions = permission.conditions || {};
 
       // Vérifie si la ressource existe dans les entités connues
-      
       
       if (this.subjects.includes(resource)) {
       console.log("le subjects",this.subjects);

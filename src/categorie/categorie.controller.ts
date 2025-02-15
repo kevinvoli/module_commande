@@ -48,7 +48,8 @@ export class CategorieController {
   )
   @MessagePattern({cmd:'update_categorie'})
   async update(@Payload() updateCategorieDto: UpdateCategorieDto) {
-    return await this.categorieService.update(updateCategorieDto.Id, updateCategorieDto);
+    const id  = 1
+    return await this.categorieService.update(id, updateCategorieDto);
   }
 
   @UseGuards(PoliciesGuard)
