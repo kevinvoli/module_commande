@@ -12,10 +12,10 @@ export class CategorieController {
   constructor(private readonly categorieService: CategorieService) {}
   
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'categorie')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'categorie')
+  // )
   @MessagePattern({cmd:'create_categorie'})
   async create(@Payload() createCategorieDto: CreateCategorieDto) {
     console.log('creation de categorie', CreateCategorieDto);
@@ -23,39 +23,39 @@ export class CategorieController {
     return await this.categorieService.create(createCategorieDto);
   }
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'categorie')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'categorie')
+  // )
   @MessagePattern({cmd:'findAll_categorie'})
   async findAll() {
     console.log('find All');
     return await this.categorieService.findAll();
   }
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'categorie')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'categorie')
+  // )
   @MessagePattern({cmd:'findOne_categorie'})
   async findOne(@Payload() id: number) {
     return await this.categorieService.findOne(id);
   }
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'categorie')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'categorie')
+  // )
   @MessagePattern({cmd:'update_categorie'})
   async update(@Payload() updateCategorieDto: UpdateCategorieDto) {
     const id  = 1
     return await this.categorieService.update(id, updateCategorieDto);
   }
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'categorie')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'categorie')
+  // )
   @MessagePattern({cmd:'remove_categorie'})
   async remove(@Payload() id: number) {
     return await this.categorieService.remove(id);

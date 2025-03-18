@@ -47,6 +47,8 @@ export class CategorieService {
           parent:true
         },
       })
+      console.log("les categorie",categorie);
+      
       return categorie
     } catch (error) {
       throw new NotFoundException(error)

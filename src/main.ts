@@ -4,7 +4,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import axios from 'axios';
 
 
-const serviceName = 'commendeService';
+const serviceName = 'ServiceStock';
   const host = '127.0.0.1';
   const port = 3001;
   const protocole= 'tcp';
