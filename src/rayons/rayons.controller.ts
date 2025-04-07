@@ -8,28 +8,28 @@ import { UpdateRayonDto } from './dto/update-rayon.dto';
 export class RayonsController {
   constructor(private readonly rayonsService: RayonsService) {}
 
-  @MessagePattern('createRayon')
-  create(@Payload() createRayonDto: CreateRayonDto) {
-    return this.rayonsService.create(createRayonDto);
+  @MessagePattern({cmd:'create_rayon'})
+  async create(@Payload() createRayonDto: CreateRayonDto) {
+    return await this.rayonsService.create(createRayonDto);
   }
 
-  @MessagePattern('findAllRayons')
-  findAll() {
-    return this.rayonsService.findAll();
+  @MessagePattern({cmd:'findAll_rayon'})
+  async findAll() {
+    return await this.rayonsService.findAll();
   }
 
-  @MessagePattern('findOneRayon')
-  findOne(@Payload() id: number) {
-    return this.rayonsService.findOne(id);
+  @MessagePattern({cmd:'findOne_rayon'})
+  async findOne(@Payload() id: number) {
+    return await this.rayonsService.findOne(id);
   }
 
-  @MessagePattern('updateRayon')
-  update(@Payload() updateRayonDto: UpdateRayonDto) {
-    return this.rayonsService.update(updateRayonDto.id, updateRayonDto);
+  @MessagePattern({cmd:'update_rayon'})
+  async update(@Payload() updateRayonDto: UpdateRayonDto) {
+    return await this.rayonsService.update(updateRayonDto.id, updateRayonDto);
   }
 
-  @MessagePattern('removeRayon')
-  remove(@Payload() id: number) {
-    return this.rayonsService.remove(id);
+  @MessagePattern({cmd:'remove_rayon'})
+  async remove(@Payload() id: number) {
+    return await this.rayonsService.remove(id);
   }
 }

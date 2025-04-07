@@ -18,7 +18,7 @@ async create(createMouvementsStockServiceDto:CreateRangementDto) {
     console.log("la cate",createMouvementsStockServiceDto);
     
     try {
-      const rayon = await this.rayonService.findOne(createMouvementsStockServiceDto.rayon) 
+      const rayon = await this.rayonService.findOne(createMouvementsStockServiceDto.rayonId) 
       const newCategorie= new Rangements()
 
       newCategorie.nom = createMouvementsStockServiceDto.nom

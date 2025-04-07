@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProduitModule } from './produit/produit.module';
 import { CategorieModule } from './categorie/categorie.module';
@@ -35,7 +34,6 @@ import { RayonsModule } from './rayons/rayons.module';
   RangementsModule,
   RayonsModule 
 ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

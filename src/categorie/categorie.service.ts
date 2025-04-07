@@ -4,6 +4,7 @@ import { UpdateCategorieDto } from './dto/update-categorie.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Categories } from './entities/categorie.entity';
 import { Repository } from 'typeorm';
+import { log } from 'console';
 
 @Injectable()
 export class CategorieService {
@@ -47,7 +48,7 @@ export class CategorieService {
           parent:true
         },
       })
-      console.log("les categorie",categorie);
+      
       
       return categorie
     } catch (error) {
@@ -57,9 +58,11 @@ export class CategorieService {
   }
 
   async findOne(id: number) {
+    
     try {
       const categorie = await this.categorieRepository.findOne({
-        where:{id:id}
+        where:{id:id},
+        relations:['parent','categories']
       })
       return categorie
     } catch (error) {
@@ -73,6 +76,13 @@ export class CategorieService {
       const categorie = await this.categorieRepository.findOne({
         where:{id:id}
       })
+      let parent ;
+      if (updateCategorieDto.parentId) {
+        parent= await this.categorieRepository.findOne({
+          where:{id:updateCategorieDto.parentId}
+        }) 
+        categorie.parent= parent
+      }
       if(!categorie) throw new NotFoundException('categorie')
       Object.assign(categorie, updateCategorieDto)
       return await this.categorieRepository.save(categorie)
@@ -88,7 +98,7 @@ export class CategorieService {
       });
       if(!categorie) throw new NotFoundException('user' );
   
-      await this.categorieRepository.delete({id});
+      await await this.categorieRepository.delete({id});
       return true
     } catch (error) {
       throw new NotFoundException(error)

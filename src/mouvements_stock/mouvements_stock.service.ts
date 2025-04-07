@@ -28,7 +28,7 @@ export class MouvementsStockService {
         
         return categorie
       } catch (error) {
-        console.log(error.code);
+        console.log("creater",error);
         if(error.code =="ER_DUP_ENTRY"){
           throw new HttpException('ce nom existe déjà',HttpStatus.BAD_REQUEST)
         }

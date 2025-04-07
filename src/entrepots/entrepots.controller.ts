@@ -8,28 +8,28 @@ import { UpdateEntrepotDto } from './dto/update-entrepot.dto';
 export class EntrepotsController {
   constructor(private readonly entrepotsService: EntrepotsService) {}
 
-  @MessagePattern('createEntrepot')
-  create(@Payload() createEntrepotDto: CreateEntrepotDto) {
-    return this.entrepotsService.create(createEntrepotDto);
+  @MessagePattern({cmd:'create_entrepot'})
+  async create(@Payload() createEntrepotDto: CreateEntrepotDto) {
+    return await this.entrepotsService.create(createEntrepotDto);
   }
 
-  @MessagePattern('findAllEntrepots')
-  findAll() {
-    return this.entrepotsService.findAll();
+  @MessagePattern({cmd:'findAll_entrepot'})
+  async findAll() {
+    return await this.entrepotsService.findAll();
   }
 
-  @MessagePattern('findOneEntrepot')
-  findOne(@Payload() id: number) {
-    return this.entrepotsService.findOne(id);
+  @MessagePattern({cmd:'findOne_entrepot'})
+  async findOne(@Payload() id: number) {
+    return await this.entrepotsService.findOne(id);
   }
 
-  @MessagePattern('updateEntrepot')
-  update(@Payload() updateEntrepotDto: UpdateEntrepotDto) {
-    return this.entrepotsService.update(updateEntrepotDto.id, updateEntrepotDto);
+  @MessagePattern({cmd:'update_entrepot'})
+  async update(@Payload() updateEntrepotDto: UpdateEntrepotDto) {
+    return await this.entrepotsService.update(updateEntrepotDto.id, updateEntrepotDto);
   }
 
-  @MessagePattern('removeEntrepot')
-  remove(@Payload() id: number) {
-    return this.entrepotsService.remove(id);
+  @MessagePattern({cmd:'remove_entrepot'})
+  async remove(@Payload() id: number) {
+    return await this.entrepotsService.remove(id);
   }
 }

@@ -7,5 +7,5 @@ export class CreateRangementDto {
 
     @IsNotEmpty()
     @IsInt()
-    rayon: number;
+    rayonId: number;
 }

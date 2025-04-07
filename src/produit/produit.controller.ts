@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, NotFoundException } from '@nestjs/common';
 import { ProduitService } from './produit.service';
 import { CreateProduitDto } from './dto/create-produit.dto';
 import { UpdateProduitDto } from './dto/update-produit.dto';
@@ -11,50 +11,58 @@ import { PoliciesGuard } from 'src/casl/guards/policies.guard';
 export class ProduitController {
   constructor(private readonly produitService: ProduitService) {}
   
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'produit')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'produit')
+  // )
   @MessagePattern({cmd:'create_produit'})
-  create(@Payload() createProduitDto: CreateProduitDto) {
-    return this.produitService.create(createProduitDto);
+  async create(@Payload() createProduitDto: CreateProduitDto) {
+    return await this.produitService.create(createProduitDto);
   }
   
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'produit')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'produit')
+  // )
   @MessagePattern({cmd:'findAll_produit'})
-  async findAll(data?:any) {
-    console.log('find All',data);
+  async findAll() {
+    try {
+      console.log('find All');
     
-    return await this.produitService.findAll();
+      const resul= await this.produitService.findAll(); 
+      console.log(resul);
+      return resul
+    } catch (error) {
+      throw new NotFoundException(error)
+    }
+    
   }
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'produit')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'produit')
+  // )
   @MessagePattern({cmd:'findOne_produit'})
-  findOne(@Payload() id: number) {
+  async findOne(@Payload() id: number) {
     return this.produitService.findOne(id);
   }
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'produit')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'produit')
+  // )
   @MessagePattern({cmd:'update_produit'})
-  update(@Payload() updateProduitDto: UpdateProduitDto) {
-    return this.produitService.update(updateProduitDto.Id, updateProduitDto);
+  async update(@Payload() updateProduitDto: UpdateProduitDto) {
+    
+    return await this.produitService.update(updateProduitDto.Id, updateProduitDto);
   }
 
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'produit')
-  )
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies(
+  //   (ability) => ability.can(Action.Read, 'produit')
+  // )
   @MessagePattern({cmd:'remove_produit'})
-  remove(@Payload() id: number) {
+  async remove(@Payload() id: number) {
     return this.produitService.remove(id);
   } 
 }

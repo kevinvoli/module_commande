@@ -41,7 +41,7 @@ export class ProduitService {
           categorie:true
         }
       })
-      return {ligne:ligne, data:'les data'}
+      return ligne
     } catch (error) {
       throw new HttpException("echec de la creation de article", HttpStatus.NOT_FOUND)
 
