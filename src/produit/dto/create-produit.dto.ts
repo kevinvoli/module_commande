@@ -1,11 +1,13 @@
-import { IsInt, IsNotEmpty, IsNumber } from "class-validator";
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateProduitDto {
    
   @IsNotEmpty()
+  @IsString()
   nom: string;
 
   @IsNotEmpty()
+  @IsString()
   description: string | null;
 
   @IsNotEmpty()
@@ -21,6 +23,7 @@ export class CreateProduitDto {
   seuilAlerte: number;
 
   @IsNumber()
+  @IsOptional()
   Id: number
   
 }

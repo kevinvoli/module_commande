@@ -5,6 +5,7 @@ import axios from 'axios';
 import * as net from 'net';
 import * as os from 'os'
 import { ValidationPipe } from '@nestjs/common';
+import { TypeOrmExceptionFilter } from './utils/typeorm-exeption.filter';
 
 
 
@@ -32,6 +33,8 @@ async function bootstrap() {
       port: 3001, // Port pour ce microservice
     },
   });
+  app.useGlobalFilters(new TypeOrmExceptionFilter());
+
   const serviceName = 'ServiceStock';
   const port = '3001';
   // Enregistrer ce service auprès du Gateway
@@ -48,9 +51,6 @@ async function bootstrap() {
     console.error('Erreur lors de l’enregistrement auprès du Gateway', error.message);
   }
   
-  // app.useGlobalPipes(new ValidationPipe({
-  //   whitelist:true
-  // }));
    
   app.listen();
   console.log('Microservice Stock is running on port 3001');

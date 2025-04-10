@@ -1,4 +1,5 @@
-import { IsString, isString, IsNotEmpty, IsDateString, IsInt } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, isString, IsNotEmpty, IsDateString, IsInt, IsEnum } from 'class-validator';
 
 export enum typeMouvement {
   entree= "entrée",
@@ -7,7 +8,7 @@ export enum typeMouvement {
 
 export class CreateMouvementsStockDto {
 
-    @IsString()
+    @IsEnum(typeMouvement)
     @IsNotEmpty()
     typeMouvement:typeMouvement ;
   
@@ -17,11 +18,12 @@ export class CreateMouvementsStockDto {
   
     @IsDateString()
     @IsNotEmpty()
-    date: Date | null;
+    @Type(()=>Date)
+    date: Date ;
   
     @IsString()
-    @IsNotEmpty()
-    rangementId: number | null;
+    @IsInt()
+    rangementId: number;
   
 
     @IsNotEmpty()

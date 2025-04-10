@@ -12,8 +12,6 @@ export class PoliciesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private caslAbilityFactory: CaslAbilityFactory,
-
-
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -23,13 +21,13 @@ export class PoliciesGuard implements CanActivate {
         context.getHandler(),
       ) || [];
       // console.log("les handje", handlers);
-      // console.log("les permision", );
     
     const request = context.switchToRpc().getData();
     // console.log("les user", request.user);
     const {permission,user} = request.user
-
- 
+      console.log("les permision",  context.switchToRpc().getData());
+     
+      
 
     if (!permission) {
       throw new ForbiddenException("L'utilisateur n'est pas authentifié");
@@ -38,10 +36,10 @@ export class PoliciesGuard implements CanActivate {
     const ability = await this.caslAbilityFactory.createForUser(permission);
     handlers.forEach((handler, index) => {
       const result = handler(ability);
-      // console.log("les permision", result);
-
     });
-    // console.log("every handler: ", handlers.every((handler) => handler(ability)));
+    console.log("mon contextde arg:", context.getArgs());
+    context.getArgs()[0] = {...request.data };
+    console.log("mon contextde arg:", context.getArgs());
     
     // Vérifier les permissions en utilisant les handlers
     return handlers.every((handler) => handler(ability));

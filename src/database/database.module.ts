@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmRpcExceptionFilter } from 'src/utils/rpc-exception.filter';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -22,6 +24,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           synchronize:true,
         })
     })
+  ],
+  providers:[
+    {
+      provide: APP_FILTER,
+      useClass: TypeOrmRpcExceptionFilter,
+    },
   ]
 })
 export class DatabaseModule {}

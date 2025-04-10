@@ -10,6 +10,8 @@ import { CaslModule } from './casl/casl.module';
 import { EntrepotsModule } from './entrepots/entrepots.module';
 import { RangementsModule } from './rangements/rangements.module';
 import { RayonsModule } from './rayons/rayons.module';
+import { APP_FILTER } from '@nestjs/core';
+import { TypeOrmRpcExceptionFilter } from './utils/rpc-exception.filter';
 
 
 
@@ -34,6 +36,11 @@ import { RayonsModule } from './rayons/rayons.module';
   RangementsModule,
   RayonsModule 
 ],
-  providers: [AppService],
+  providers: [
+      {
+          provide:APP_FILTER,
+          useClass:TypeOrmRpcExceptionFilter
+        },
+    AppService],
 })
 export class AppModule {}

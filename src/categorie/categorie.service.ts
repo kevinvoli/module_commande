@@ -64,6 +64,8 @@ export class CategorieService {
         where:{id:id},
         relations:['parent','categories']
       })
+      console.log("find categorie 1:", categorie);
+      
       return categorie
     } catch (error) {
       throw new NotFoundException(error)
