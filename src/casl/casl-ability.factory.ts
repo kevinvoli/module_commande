@@ -20,7 +20,7 @@ export class CaslAbilityFactory {
   }
   async createForUser(permission: CreatePermissionDto[]) {
     
-    console.log("mes  ",permission,this.subjects);        
+    // console.log("mes  ",permission,this.subjects);        
     
     const { can, cannot, build } = new AbilityBuilder<
       Ability<[Action, string]> // On utilise `string` pour les sujets
@@ -33,10 +33,10 @@ export class CaslAbilityFactory {
       const action = permission.action ;
       const resource = permission.module.toLowerCase() ;
       const conditions = permission.conditions || {};
-
-      // Vérifie si la ressource existe dans les entités connues
-      
-      if (normalizedSubjects.includes(resource)) {    
+   
+      if (normalizedSubjects.includes(resource)) {   
+        // console.log("la resssource:", normalizedSubjects,action);
+         
         can(action, resource, conditions);
       }
     });

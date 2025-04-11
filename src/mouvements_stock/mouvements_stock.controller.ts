@@ -12,18 +12,17 @@ import { Action } from 'src/casl/entities/permission.entity';
   // transform: true, // Cela transforme les objets bruts en instances de DTO
   whitelist: true, // Cela supprime les propriétés non définies dans le DTO
   exceptionFactory: (errors) =>{
-  console.log(errors);
- 
-  return new RpcException(errors);
-  
+  return new RpcException(errors); 
 }}))
+@UseGuards(PoliciesGuard) 
 export class MouvementsStockController {
   constructor(private readonly mouvementsStockService: MouvementsStockService) {}
 
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'MouvementsStock')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'mouvementsstock'),
+    (ability) => ability.can(Action.Create, 'mouvementsstock')
+
+  )
   @MessagePattern({cmd:'create_mouvementsStock'})
   async create(@Payload() createMouvementsStockDto: CreateMouvementsStockDto) {
     try {
@@ -36,10 +35,9 @@ export class MouvementsStockController {
    
   }
 
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'MouvementsStock')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'mouvementsstock')
+  )
   @MessagePattern({cmd:'findAll_mouvementsStock'})
   async findAll() {
     console.log("find all");
@@ -51,25 +49,24 @@ export class MouvementsStockController {
    
   }
 
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'MouvementsStock')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'mouvementsstock')
+  )
   @MessagePattern({cmd:'findOne_mouvementsStock'})
-  async    findOne(@Payload() id: number) {
+  async    findOne(@Payload() data: number) {
     try {
-      return await this.mouvementsStockService.findAll();
+      return await this.mouvementsStockService.findOne(data);
     } catch (error) {
       throw new NotFoundException(error)
     }
-    return await this.mouvementsStockService.findOne(id);
   }
 
 
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'MouvementsStock')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'mouvementsstock'),
+    (ability) => ability.can(Action.Update, 'mouvementsstock')
+
+  )
   @MessagePattern({cmd:'update_mouvementsStock'})
   async update(@Payload() updateMouvementsStockDto: UpdateMouvementsStockDto) {
     try {
@@ -80,14 +77,15 @@ export class MouvementsStockController {
     
   }
 
-  @UseGuards(PoliciesGuard)
   @CheckPolicies(
-    (ability) => ability.can(Action.Read, 'MouvementsStock')
+    (ability) => ability.can(Action.Read, 'mouvementsstock'),
+    (ability) => ability.can(Action.Delete, 'mouvementsstock')
+
   )
   @MessagePattern({cmd:'remove_mouvementsStock'})
-  async remove(@Payload() id: number) {
+  async remove(@Payload() data: number) {
     try {
-      return await this.mouvementsStockService.remove(id);
+      return await this.mouvementsStockService.remove(data);
     } catch (error) {
       throw new NotFoundException(error)
     }

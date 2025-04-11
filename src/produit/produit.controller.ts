@@ -1,29 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, NotFoundException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProduitService } from './produit.service';
 import { CreateProduitDto } from './dto/create-produit.dto';
 import { UpdateProduitDto } from './dto/update-produit.dto';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
 import { Action } from 'src/casl/entities/permission.entity';
 import { CheckPolicies } from 'src/casl/decorators/policies.decorator';
 import { PoliciesGuard } from 'src/casl/guards/policies.guard';
 
 @Controller('produit')
+@UsePipes(new ValidationPipe({
+  whitelist:true,
+  exceptionFactory: (errors) =>{
+  return new RpcException(errors);}})
+)
+@UseGuards(PoliciesGuard) 
 export class ProduitController {
   constructor(private readonly produitService: ProduitService) {}
   
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'produit')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'produits'),
+    (ability) => ability.can(Action.Create, 'produits')
+  )
   @MessagePattern({cmd:'create_produit'})
   async create(@Payload() createProduitDto: CreateProduitDto) {
     return await this.produitService.create(createProduitDto);
   }
   
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'produit')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'produits')
+  )
   @MessagePattern({cmd:'findAll_produit'})
   async findAll() {
     try {
@@ -38,31 +43,32 @@ export class ProduitController {
     
   }
 
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'produit')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'produits')
+  )
   @MessagePattern({cmd:'findOne_produit'})
-  async findOne(@Payload() id: number) {
-    return this.produitService.findOne(id);
+  async findOne(@Payload() data: number) {
+    return this.produitService.findOne(data);
   }
 
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'produit')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'produits'),
+    (ability) => ability.can(Action.Update, 'produits')
+
+  )
   @MessagePattern({cmd:'update_produit'})
   async update(@Payload() updateProduitDto: UpdateProduitDto) {
     
     return await this.produitService.update(updateProduitDto.Id, updateProduitDto);
   }
 
-  // @UseGuards(PoliciesGuard)
-  // @CheckPolicies(
-  //   (ability) => ability.can(Action.Read, 'produit')
-  // )
+  @CheckPolicies(
+    (ability) => ability.can(Action.Read, 'produits'),
+    (ability) => ability.can(Action.Delete, 'produits')
+
+  )
   @MessagePattern({cmd:'remove_produit'})
-  async remove(@Payload() id: number) {
-    return this.produitService.remove(id);
+  async remove(@Payload() data: number) {
+    return this.produitService.remove(data);
   } 
 }

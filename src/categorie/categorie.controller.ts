@@ -17,12 +17,13 @@ import { TypeOrmRpcExceptionFilter } from 'src/utils/rpc-exception.filter';
 }
 }
 ))
+@UseGuards(PoliciesGuard)
 export class CategorieController {
   
   constructor(private readonly categorieService: CategorieService) {}
   
 
-  @UseGuards(PoliciesGuard)
+
   @CheckPolicies(
     (ability) => ability.can(Action.Read, 'categories')
   )
@@ -40,25 +41,24 @@ export class CategorieController {
   }
 
 
-  @UseGuards(PoliciesGuard)
   @CheckPolicies(
     (ability) => ability.can(Action.Read, 'categories')
   )
   @MessagePattern({cmd:'findAll_categorie'})
   async findAll() {
-
+    console.log("============================================================================**********************************")
     return await this.categorieService.findAll();
   }
 
-  @UseGuards(PoliciesGuard)
   @CheckPolicies(
     (ability) => ability.can(Action.Read, 'categories')
   )
   @MessagePattern({cmd:'findOne_categorie'})
-  async findOne(@Payload() id: number) {
+  async findOne(@Payload() data: number) {
     try {
+    console.log("============================================================================**********************************",data);
     
-    return await this.categorieService.findOne(id);
+    return await this.categorieService.findOne(data);
     } catch (error) {
       console.log(error);
       throw new Error(error)
@@ -67,7 +67,6 @@ export class CategorieController {
     
   }
 
-  @UseGuards(PoliciesGuard)
   @CheckPolicies(
     (ability) => ability.can(Action.Read, 'categories')
   )
@@ -86,12 +85,11 @@ export class CategorieController {
   
   }
 
-  @UseGuards(PoliciesGuard)
   @CheckPolicies(
     (ability) => ability.can(Action.Read, 'categorie')
   )
   @MessagePattern({cmd:'remove_categorie'})
-  async remove(@Payload() id: number) {
-    return await this.categorieService.remove(id);
+  async remove(@Payload() data: number) {
+    return await this.categorieService.remove(data);
   } 
 }
