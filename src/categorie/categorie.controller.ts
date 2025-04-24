@@ -46,7 +46,7 @@ export class CategorieController {
   )
   @MessagePattern({cmd:'findAll_categorie'})
   async findAll() {
-    console.log("============================================================================**********************************")
+
     return await this.categorieService.findAll();
   }
 

@@ -40,7 +40,6 @@ export class PoliciesGuard implements CanActivate {
   
     context.getArgs()[0] =typeof request.data=== "object"? {...request.data }: request.data
    
-    console.log("mon contextde arg:", context.getArgs());
     
     // Vérifier les permissions en utilisant les handlers
     return handlers.every((handler) => handler(ability));
